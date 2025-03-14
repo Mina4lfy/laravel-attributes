@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Rinvex\Attributes\Traits;
 
-use Schema;
+use Illuminate\Support\Facades\Schema;
 use Closure;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use SuperClosure\Serializer;
+use Opis\Closure\Serializer;
 use Rinvex\Attributes\Models\Value;
 use Rinvex\Attributes\Models\Attribute;
 use Illuminate\Database\Eloquent\Builder;
@@ -48,6 +48,13 @@ trait Attributable
      * @var bool
      */
     protected $entityAttributeRelationsBooted = false;
+
+    /**
+     * Unguarded attributes.
+     *
+     * @var array
+     */
+    protected static array $unguarded = [];
 
     /**
      * Boot the attributable trait for a model.
@@ -109,7 +116,7 @@ trait Attributable
      * @param string $relation
      * @param mixed  $value
      *
-     * @return $this
+     * @return array
      */
     public function relationsToArray()
     {
@@ -425,7 +432,7 @@ trait Attributable
      * @param \Rinvex\Attributes\Models\Attribute $attribute
      * @param mixed                               $value
      *
-     * @return $this
+     * @return mixed
      */
     protected function setEntityAttributeValue(Attribute $attribute, $value)
     {

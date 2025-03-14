@@ -6,7 +6,8 @@ namespace Rinvex\Attributes\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Rinvex\Attributes\Models\Attribute;
-use Rinvex\Support\Traits\ConsoleTools;
+use Rinvex\Attributes\Traits\AdditionalConsoleTools;
+use Rinvex\Attributes\Traits\ConsoleTools;
 use Rinvex\Attributes\Models\AttributeEntity;
 use Rinvex\Attributes\Console\Commands\MigrateCommand;
 use Rinvex\Attributes\Console\Commands\PublishCommand;
@@ -14,7 +15,7 @@ use Rinvex\Attributes\Console\Commands\RollbackCommand;
 
 class AttributesServiceProvider extends ServiceProvider
 {
-    use ConsoleTools;
+    use ConsoleTools, AdditionalConsoleTools;
 
     /**
      * The commands to be registered.
@@ -33,7 +34,7 @@ class AttributesServiceProvider extends ServiceProvider
     public function register()
     {
         // Merge config
-        $this->mergeConfigFrom(realpath(__DIR__.'/../../config/config.php'), 'rinvex.attributes');
+        $this->mergeConfigFrom(\realpath(__DIR__ . '/../../config/config.php'), 'rinvex.attributes');
 
         // Bind eloquent models to IoC container
         $this->registerModels([
@@ -57,7 +58,7 @@ class AttributesServiceProvider extends ServiceProvider
     {
         // Publish Resources
         $this->publishesConfig('rinvex/laravel-attributes');
-        $this->publishesMigrations('rinvex/laravel-attributes');
+        $this->publishesMigrations(['rinvex/laravel-attributes']);
         ! $this->autoloadMigrations('rinvex/laravel-attributes') || $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
     }
 }
