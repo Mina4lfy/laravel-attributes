@@ -19,6 +19,9 @@ use Rinvex\Attributes\Events\EntityWasDeleted;
 use Rinvex\Attributes\Support\ValueCollection;
 use Illuminate\Support\Collection as BaseCollection;
 
+/**
+ * @property array $unguarded
+ */
 trait Attributable
 {
     /**
@@ -48,13 +51,6 @@ trait Attributable
      * @var bool
      */
     protected $entityAttributeRelationsBooted = false;
-
-    /**
-     * Unguarded attributes.
-     *
-     * @var array
-     */
-    protected static array $unguarded = [];
 
     /**
      * Boot the attributable trait for a model.
