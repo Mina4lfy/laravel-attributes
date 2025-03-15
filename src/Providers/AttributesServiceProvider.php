@@ -34,7 +34,10 @@ class AttributesServiceProvider extends ServiceProvider
     public function register()
     {
         // Merge config
-        $this->mergeConfigFrom(\realpath(__DIR__ . '/../../config/config.php'), 'rinvex.attributes');
+        if (!file_exists($configFilepath = \config_path('laravel-attributes.php'))) {
+            $configFilepath = \realpath(__DIR__ . '/../../config/config.php');
+        }
+        $this->mergeConfigFrom($configFilepath, 'rinvex.attributes');
 
         // Bind eloquent models to IoC container
         $this->registerModels([
